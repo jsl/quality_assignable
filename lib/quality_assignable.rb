@@ -14,7 +14,10 @@ module QualityAssignable
 
       args.each do |arg|
         col_name = "#{arg}_quality_score"
-        raise "QualityAssignable needs a column named #{col_name} on #{self.name}" unless self.column_names.include?(col_name)
+        
+        if table_exists?
+          raise "QualityAssignable needs a column named #{col_name} on #{self.name}" unless self.column_names.include?(col_name)
+        end
 
         value_object_method = "#{arg}_with_quality"
         class_name = opts[:class_name] || "QualityAssignable::Attribute"
@@ -31,7 +34,10 @@ module QualityAssignable
       quality_col     = opts[:quality_column] || 'quality_score'
       valid_qualities = opts[:valid_qualities] || QualityAssignable::Constants::DEFAULT_QUALITIES
 
-      raise "QualityAssignable needs a column named #{quality_col} on #{self.name}" unless self.column_names.include?(quality_col)
+      if table_exists?
+        raise "QualityAssignable needs a column named #{quality_col} on #{self.name}" unless self.column_names.include?(quality_col)
+      end
+      
       include Comparable
 
       # Defines a method that returns the symbol based on the Integer stored in quality_col
