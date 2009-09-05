@@ -1,0 +1,34 @@
+= quality_assignable
+
+Quality Assignable helps to merge data sources when the sources are of varying quality.
+
+== Description
+
+Quality Assignable helps to merge data sources when the sources are of varying quality.  It is designed to 
+work with ActiveRecord models that can be assigned a quality, or with individual attributes on a model.  It works
+by using Ruby's Comparable mixin.  
+
+== Installation
+
+quality_assignable is available as a gem available on GitHub.  Install with:
+
+  sudo gem install jsl-quality_assignable
+
+You'll probable want a line like the following in your environment.rb:
+
+  config.gem 'jsl-quality_assignable', :lib => 'quality_assignable'
+
+== Basic Usage
+
+Please see the specs for basic usage examples.
+
+== Options
+
+Quality Assignable supports setting a user-defined subclass for the value object used in 
+implementing attributes that have a quality assigned.  It also supports options to change
+the column used for determining the quality of a model, as well as the set of qualities
+that will be supported.
+
+== Author
+
+Justin S. Leitgeb <justin@phq.org>
