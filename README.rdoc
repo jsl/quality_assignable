@@ -1,12 +1,16 @@
 = quality_assignable
 
-Quality Assignable helps to merge data sources when the sources are of varying quality.
+Quality Assignable is an ActiveRecord extension that helps to merge data sources when the sources are of varying quality.
 
 == Description
 
 Quality Assignable helps to merge data sources when the sources are of varying quality.  It is designed to 
 work with ActiveRecord models that can be assigned a quality, or with individual attributes on a model.  It works
 by using Ruby's Comparable mixin.  
+
+Examples of when this plugin may come in handy include cases where you have multiple addresses from different sources,
+and some are generally of higher quality than others.  Using this plugin, you would just assign the quality score to 
+each record or attribute, sort them, and take the one on the top of the sorted resultset.
 
 == Installation
 
@@ -20,7 +24,8 @@ You'll probable want a line like the following in your environment.rb:
 
 == Basic Usage
 
-Please see the specs for basic usage examples.
+Quality Assignable can work at the Model level or at the attribute level.  Please see the specs for 
+an extensive set of examples until this documentation section is filled out.
 
 == Options
 
