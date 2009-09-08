@@ -1,16 +1,15 @@
-= quality_assignable
+= Quality Assignable
 
-Quality Assignable is an ActiveRecord extension that helps to merge data sources when the sources are of varying quality.
+Quality Assignable is an ActiveRecord extension that helps to merge data sources when the sources are of 
+varying quality.  
 
-== Description
+== Use Cases
 
-Quality Assignable helps to merge data sources when the sources are of varying quality.  It is designed to 
-work with ActiveRecord models that can be assigned a quality, or with individual attributes on a model.  It works
-by using Ruby's Comparable mixin.  
-
-Examples of when this plugin may come in handy include cases where you have multiple addresses from different sources,
-and some are generally of higher quality than others.  Using this plugin, you would just assign the quality score to 
-each record or attribute, sort them, and take the one on the top of the sorted resultset.
+For example, it may be useful when merging addresses that come from different sources.
+Chances are, you want to use the address, or just certain attributes of an address that come from
+one data source instead of another.  This plugin quickly makes your model comparable and able to be 
+initialized with pre-defined symbols according to a quality level.  Afterwards, it's just a matter of
+using Ruby's 'sort' method to find the attribute or model with the highets quality.
 
 == Installation
 
@@ -24,8 +23,32 @@ You'll probable want a line like the following in your environment.rb:
 
 == Basic Usage
 
-Quality Assignable can work at the Model level or at the attribute level.  Please see the specs for 
-an extensive set of examples until this documentation section is filled out.
+Quality Assignable can work at the Model level or at the attribute level.  In an ActiveRecord model the 
+the following will make your class comparable:
+
+  model Foo < ActiveRecord::Base
+    quality_assignable_model
+  end
+
+This will allow you to create models that can be initialized with symbols corresponding to a particular
+quality that can be ranked.  E.g.,
+
+cm1 = Foo.new(:quality_score => :low)
+cm2 = Foo.new(:quality_score => :high)
+
+Quality Assignable also helps to merge attributes that have different qualities.  For example:
+
+  class Taco < ActiveRecord::Base
+    quality_assignable_attribute :salsa
+  end
+
+Afterwards, instances of Taco can have qualities assigned using a "value object" [1] following the standard 
+ActiveRecord pattern with composed_of.
+
+  # Create a new Taco instance with salsa having a particular quality
+  t = Taco.new(:salsa_with_quality => QualityAssignable::Attribute.new('spicy', :low))
+
+Please see the specs for an extensive set of examples until this documentation section is filled out.
 
 == Options
 
@@ -33,6 +56,10 @@ Quality Assignable supports setting a user-defined subclass for the value object
 implementing attributes that have a quality assigned.  It also supports options to change
 the column used for determining the quality of a model, as well as the set of qualities
 that will be supported.
+
+== References
+
+[1] http://c2.com/cgi/wiki?ValueObject
 
 == Author
 
